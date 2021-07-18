@@ -34,6 +34,8 @@ const networks = {
   },
   xdai: {
     chainId: 100,
+    quartz: '0x2cec5620B4448Fa36F753Db7B496Ce51cC096d08',
+    governor: '0x896f9726E1f77069A3d0993CAf03D62A248B0129',
     ensRegistry: '0xaafca6b0c89521752e559650206d7c925fd0e530',
     name: 'xDai',
     type: 'xdai',

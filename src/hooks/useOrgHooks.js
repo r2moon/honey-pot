@@ -70,7 +70,7 @@ export function useOrgData() {
           setHoneypot(honeypotConnector)
         }
       } catch (err) {
-        console.error(`Error fetching honey pot connector: ${err}`)
+        console.error(`Error fetching sandclock connector: ${err}`)
       }
     }
 

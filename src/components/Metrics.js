@@ -135,7 +135,7 @@ function TokenPrice({ currency }) {
           margin-bottom: ${0.5 * GU}px;
         `}
       >
-        HNY Price
+        QUARTZ Price
       </p>
       <span
         css={`

@@ -1,5 +1,5 @@
-# Honey pot Subgraph
+# Sandclock Governor Subgraph
 
-Subgraph for Honey-pot frontend.
+Subgraph for Sandclock governor frontend.
 
 Indexed data from conviction voting and dandelion voting apps.
