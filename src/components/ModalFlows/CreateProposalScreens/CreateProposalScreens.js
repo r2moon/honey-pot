@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import ModalFlowBase from '../ModalFlowBase'
 import ActionFees from './ActionFees'
 import AddProposal from './AddProposal'
-import CreateProposalRequirements from './CreateProposalRequirements'
+// import CreateProposalRequirements from './CreateProposalRequirements'
 import { useAgreement } from '../../../hooks/useAgreement'
 import { useWallet } from '../../../providers/Wallet'
 import useActions from '../../../hooks/useActions'
@@ -13,7 +13,7 @@ function CreateProposalScreens() {
   const [transactions, setTransactions] = useState([])
   const { account } = useWallet()
   const [agreement, agreementLoading] = useAgreement()
-  const { stakeManagement, loading: stakingLoading } = useStakingState()
+  const { loading: stakingLoading } = useStakingState()
   const { convictionActions } = useActions()
 
   const proposalData = useRef()
@@ -39,7 +39,7 @@ function CreateProposalScreens() {
       let params
       let fn
       if (amount.valueBN.eq(0)) {
-        fn = 'newSignalingProposal'
+        fn = 'addProposal'
         params = {
           title,
           link,
@@ -47,7 +47,6 @@ function CreateProposalScreens() {
       } else {
         const convertedAmount = amount.valueBN.toString(10)
         const stableRequestAmount = amount.stable
-
         fn = 'newProposal'
         params = {
           title,
@@ -71,16 +70,16 @@ function CreateProposalScreens() {
       stakingLoading
         ? []
         : [
-            {
-              title: 'Submit proposal requirements',
-              graphicHeader: false,
-              content: (
-                <CreateProposalRequirements
-                  agreement={agreement}
-                  staking={stakeManagement.staking}
-                />
-              ),
-            },
+            // {
+            //   title: 'Submit proposal requirements',
+            //   graphicHeader: false,
+            //   content: (
+            //     <CreateProposalRequirements
+            //       agreement={agreement}
+            //       staking={stakeManagement.staking}
+            //     />
+            //   ),
+            // },
             {
               title: 'Create proposal',
               graphicHeader: true,
@@ -102,7 +101,7 @@ function CreateProposalScreens() {
       getTransactions,
       handleSetProposalData,
       stakingLoading,
-      stakeManagement,
+      // stakeManagement,
     ]
   )
 

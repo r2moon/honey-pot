@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { noop } from '@1hive/1hive-ui'
 import { toHex } from 'web3-utils'
+import { utils } from 'ethers'
 
 import { useAppState } from '../providers/AppState'
 import { useWallet } from '../providers/Wallet'
@@ -13,10 +14,12 @@ import { useDisputeFees } from './useDispute'
 import env from '../environment'
 
 import { VOTE_YEA } from '../constants'
+import { getNetwork } from '../networks'
 import { encodeFunctionData } from '../utils/web3-utils'
 import BigNumber from '../lib/bigNumber'
 import tokenAbi from '../abi/minimeToken.json'
 import agreementAbi from '../abi/agreement.json'
+import governorAbi from '../abi/governor.json'
 
 const GAS_LIMIT = 450000
 const RESOLVE_GAS_LIMIT = 700000
@@ -68,21 +71,24 @@ export default function useActions() {
     [account, convictionVotingApp, mounted]
   )
 
-  const newSignalingProposal = useCallback(
+  const addProposal = useCallback(
     async ({ title, link }, onDone = noop) => {
-      const intent = await convictionVotingApp.intent(
-        'addSignalingProposal',
-        [title, link ? toHex(link) : '0x'],
+      const governorInterface = new utils.Interface(governorAbi)
+      const transactions = [
         {
-          actAs: account,
-        }
-      )
-
+          data: governorInterface.encodeFunctionData('addProposal', [
+            title,
+            link ? toHex(link) : '0x',
+          ]),
+          from: account,
+          to: getNetwork().governor,
+        },
+      ]
       if (mounted()) {
-        onDone(intent.transactions)
+        onDone(transactions)
       }
     },
-    [account, convictionVotingApp, mounted]
+    [account, mounted]
   )
 
   const cancelProposal = useCallback(
@@ -310,7 +316,7 @@ export default function useActions() {
     convictionActions: {
       executeProposal,
       newProposal,
-      newSignalingProposal,
+      addProposal,
       cancelProposal,
       stakeToProposal,
       withdrawFromProposal,
